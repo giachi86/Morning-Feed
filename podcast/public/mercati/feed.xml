@@ -12,5 +12,12 @@
       <pubDate>Sat, 11 Jul 2026 23:52:00 +0200</pubDate>
       <enclosure url="https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/episodes/2026-07-11-2352.m4a" length="855672" type="audio/mp4" />
     </item>
+    <item>
+      <title>Prova Mercati del mattino</title>
+      <description>Episodio di prova ripristinato con audio verificato.</description>
+      <guid isPermaLink="false">mercati-2026-07-11-2341</guid>
+      <pubDate>Sat, 11 Jul 2026 23:41:38 +0200</pubDate>
+      <enclosure url="https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/episodes/2026-07-11-2341.m4a" length="855672" type="audio/mp4" />
+    </item>
   </channel>
 </rss>
