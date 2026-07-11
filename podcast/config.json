@@ -1,0 +1,16 @@
+{
+  "recipient": "giachi86@gmail.com",
+  "voice": "Reed (Italian (Italy))",
+  "retention": 30,
+  "base_url": "https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public",
+  "shows": {
+    "ai": {
+      "title": "AI del mattino",
+      "description": "Rassegna personale quotidiana delle notizie sull'intelligenza artificiale."
+    },
+    "mercati": {
+      "title": "Mercati del mattino",
+      "description": "Briefing personale quotidiano su mercati finanziari e agenda economica."
+    }
+  }
+}
