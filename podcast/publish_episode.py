@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import subprocess
+import tempfile
+import time
 from datetime import datetime
 from email.utils import format_datetime
 from pathlib import Path
@@ -20,10 +23,32 @@ def load_config() -> dict:
 
 
 def generate_audio(text_file: Path, output: Path, voice: str) -> None:
-    subprocess.run(
-        ["say", "-v", voice, "-f", str(text_file), "-o", str(output)],
-        check=True,
-    )
+    with tempfile.TemporaryDirectory(prefix="morning-feed-") as temp_dir:
+        temporary_audio = Path(temp_dir) / "episode.m4a"
+        for attempt in range(3):
+            temporary_audio.unlink(missing_ok=True)
+            subprocess.run(
+                [
+                    "say", "-v", voice, "-f", str(text_file),
+                    "-o", str(temporary_audio),
+                ],
+                check=True,
+            )
+            probe = subprocess.run(
+                ["afinfo", str(temporary_audio)], capture_output=True, text=True
+            )
+            if (
+                probe.returncode == 0
+                and temporary_audio.stat().st_size > 4096
+                and "Num Tracks:     1" in probe.stdout
+            ):
+                output.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(temporary_audio, output)
+                return
+            if attempt < 2:
+                time.sleep(2)
+    output.unlink(missing_ok=True)
+    raise RuntimeError("macOS non ha generato un file audio valido dopo 3 tentativi")
 
 
 def rebuild_feed(show: str, config: dict) -> Path:
