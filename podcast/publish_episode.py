@@ -22,15 +22,16 @@ def load_config() -> dict:
     return json.loads(CONFIG.read_text(encoding="utf-8"))
 
 
-def generate_audio(text_file: Path, output: Path, voice: str) -> None:
+def generate_audio(text_file: Path, output: Path, voice: str, rate: str) -> None:
     with tempfile.TemporaryDirectory(prefix="morning-feed-") as temp_dir:
-        temporary_audio = Path(temp_dir) / "episode.m4a"
+        temporary_audio = Path(temp_dir) / f"episode{output.suffix}"
         for attempt in range(3):
             temporary_audio.unlink(missing_ok=True)
+            edge_tts = ROOT.parent / ".venv" / "bin" / "edge-tts"
             subprocess.run(
                 [
-                    "say", "-v", voice, "-f", str(text_file),
-                    "-o", str(temporary_audio),
+                    str(edge_tts), "--voice", voice, f"--rate={rate}",
+                    "--file", str(text_file), "--write-media", str(temporary_audio),
                 ],
                 check=True,
             )
@@ -74,7 +75,7 @@ def rebuild_feed(show: str, config: dict) -> Path:
 
     for meta_path in keep:
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
-        audio_path = meta_path.with_suffix(".m4a")
+        audio_path = meta_path.with_suffix(meta.get("audio_suffix", ".m4a"))
         item = ET.SubElement(channel, "item")
         ET.SubElement(item, "title").text = meta["title"]
         ET.SubElement(item, "description").text = meta["description"]
@@ -88,7 +89,7 @@ def rebuild_feed(show: str, config: dict) -> Path:
             {
                 "url": audio_url,
                 "length": str(audio_path.stat().st_size),
-                "type": "audio/mp4",
+                "type": "audio/mpeg" if audio_path.suffix == ".mp3" else "audio/mp4",
             },
         )
 
@@ -114,13 +115,15 @@ def main() -> None:
     stamp = now.strftime("%Y-%m-%d-%H%M")
     episodes = ROOT / "public" / args.show / "episodes"
     episodes.mkdir(parents=True, exist_ok=True)
-    audio = episodes / f"{stamp}.m4a"
-    generate_audio(args.text_file, audio, config["voice"])
+    suffix = "." + config.get("audio_format", "m4a")
+    audio = episodes / f"{stamp}{suffix}"
+    generate_audio(args.text_file, audio, config["voice"], config.get("voice_rate", "+0%"))
     metadata = {
         "title": args.title,
         "description": args.description,
         "guid": f"{args.show}-{stamp}",
         "published_at": now.isoformat(),
+        "audio_suffix": suffix,
     }
     audio.with_suffix(".json").write_text(
         json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8"

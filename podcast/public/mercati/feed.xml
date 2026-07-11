@@ -6,6 +6,13 @@
     <language>it-IT</language>
     <link>https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/</link>
     <item>
+      <title>Mercati del mattino — 11 luglio 2026</title>
+      <description>Wall Street positiva, Europa debole, rendimenti e agenda della prossima settimana.</description>
+      <guid isPermaLink="false">mercati-2026-07-12-0008</guid>
+      <pubDate>Sun, 12 Jul 2026 00:08:44 +0200</pubDate>
+      <enclosure url="https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/episodes/2026-07-12-0008.mp3" length="3536784" type="audio/mpeg" />
+    </item>
+    <item>
       <title>Prova Mercati del mattino — audio corretto</title>
       <description>Episodio di prova ripristinato con audio verificato.</description>
       <guid isPermaLink="false">mercati-2026-07-11-2352</guid>
