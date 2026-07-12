@@ -25,16 +25,25 @@ def load_config() -> dict:
 def generate_audio(text_file: Path, output: Path, voice: str, rate: str) -> None:
     with tempfile.TemporaryDirectory(prefix="morning-feed-") as temp_dir:
         temporary_audio = Path(temp_dir) / f"episode{output.suffix}"
+        edge_tts = ROOT.parent / ".venv" / "bin" / "edge-tts"
+        failures: list[str] = []
         for attempt in range(3):
             temporary_audio.unlink(missing_ok=True)
-            edge_tts = ROOT.parent / ".venv" / "bin" / "edge-tts"
-            subprocess.run(
-                [
-                    str(edge_tts), "--voice", voice, f"--rate={rate}",
-                    "--file", str(text_file), "--write-media", str(temporary_audio),
-                ],
-                check=True,
-            )
+            try:
+                subprocess.run(
+                    [
+                        str(edge_tts), "--voice", voice, f"--rate={rate}",
+                        "--file", str(text_file), "--write-media", str(temporary_audio),
+                    ],
+                    check=True,
+                    # Un episodio da 8-12 minuti può richiedere vari minuti al servizio.
+                    timeout=900,
+                )
+            except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+                failures.append(f"tentativo {attempt + 1}: {error}")
+                if attempt < 2:
+                    time.sleep(5)
+                continue
             probe = subprocess.run(
                 ["afinfo", str(temporary_audio)], capture_output=True, text=True
             )
@@ -46,10 +55,15 @@ def generate_audio(text_file: Path, output: Path, voice: str, rate: str) -> None
                 output.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(temporary_audio, output)
                 return
+            failures.append(f"tentativo {attempt + 1}: file audio non valido")
             if attempt < 2:
-                time.sleep(2)
+                time.sleep(5)
     output.unlink(missing_ok=True)
-    raise RuntimeError("macOS non ha generato un file audio valido dopo 3 tentativi")
+    details = "; ".join(failures)
+    raise RuntimeError(
+        "edge-tts non ha generato un file audio valido dopo 3 tentativi"
+        + (f": {details}" if details else "")
+    )
 
 
 def rebuild_feed(show: str, config: dict) -> Path:
