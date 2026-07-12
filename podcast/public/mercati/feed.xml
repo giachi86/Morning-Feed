@@ -6,6 +6,20 @@
     <language>it-IT</language>
     <link>https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/</link>
     <item>
+      <title>Mercati del mattino — puntata test watchlist — 12 luglio 2026</title>
+      <description>Nuova struttura in cinque sezioni con agenda, trend e watchlist personale.</description>
+      <guid isPermaLink="false">mercati-2026-07-12-1535</guid>
+      <pubDate>Sun, 12 Jul 2026 15:35:25 +0200</pubDate>
+      <enclosure url="https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/episodes/2026-07-12-1535.mp3" length="4373856" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>Mercati del mattino — puntata test watchlist — 12 luglio 2026</title>
+      <description>Nuova struttura in cinque sezioni con agenda, trend e watchlist personale.</description>
+      <guid isPermaLink="false">mercati-2026-07-12-1534</guid>
+      <pubDate>Sun, 12 Jul 2026 15:34:10 +0200</pubDate>
+      <enclosure url="https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public/mercati/episodes/2026-07-12-1534.mp3" length="4373856" type="audio/mpeg" />
+    </item>
+    <item>
       <title>Mercati del mattino — 11 luglio 2026</title>
       <description>Wall Street positiva, Europa debole, rendimenti e agenda della prossima settimana.</description>
       <guid isPermaLink="false">mercati-2026-07-12-0008</guid>

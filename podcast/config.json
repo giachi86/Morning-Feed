@@ -1,7 +1,7 @@
 {
   "recipient": "giachi86@gmail.com",
   "voice": "it-IT-GiuseppeMultilingualNeural",
-  "voice_rate": "-15%",
+  "voice_rate": "+0%",
   "audio_format": "mp3",
   "retention": 30,
   "base_url": "https://raw.githubusercontent.com/giachi86/Morning-Feed/main/podcast/public",
