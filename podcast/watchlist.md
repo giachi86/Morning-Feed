@@ -19,10 +19,10 @@ Aggiornata il 2026-07-12. Usare questa lista nella sezione finale di **Mercati d
 
 ### ETF, ETC e indici
 
-- FTSE Korea USD — identificare esattamente prodotto, emittente e ISIN
-- Physical Gold Hedged — identificare emittente, borsa e ISIN; possibili prodotti Xtrackers o WisdomTree
-- Nasdaq Clean Edge Smart Grid — identificare esattamente prodotto, emittente e ISIN
-- Silver Hedged EUR — identificare emittente, borsa e ISIN; possibili prodotti Xtrackers o WisdomTree
+- FTSE Korea USD — FLXK
+- Physical Gold Hedged — GBSE
+- Nasdaq Clean Edge Smart Grid — GRID
+- Silver Hedged EUR — OOXR
 
 ## Regola di analisi quotidiana
 
